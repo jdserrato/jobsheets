@@ -1,0 +1,31 @@
+  # =======================================================================================
+  # docker-compose.yml 
+  # @brief Docker Compose configuration for PostgreSQL database
+  # =======================================================================================
+
+  # This file tells Docker how to run a PostgreSQL database on my computer.
+  # Instead of typing a long command every time, Docker reads this file and
+  # sets everything up automatically with "docker compose up -d".
+  # It creates a database called "jobtracker", sets the username to "postgres" 
+  # and password to one I have hidden away in a .env file, exposes it on port 5432, 
+  # and saves the data to disk so it survives restarts.
+  # =======================================================================================
+
+
+
+
+services:                                      # telling Docker we want to run some services/containers
+  db:                                          #the name of the container I want docker to run
+    image: postgres:16                         # use the official Postgres image, version 16   
+    restart: always                            # automatically restart the container if it crashes or the computer restarts
+    environment: 
+      POSTGRES_USER: postgres                  # the database username
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # the database password pulled from the .env file for security  
+      POSTGRES_DB: jobtracker                  # create a database called jobtracker on startup
+    ports:
+      - "5432:5432"                            # maps port 5432 on my computer to port 5432 in the container, so I can connect to the database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # mounts named volume so data survives container restarts.
+
+volumes:
+  postgres_data: 

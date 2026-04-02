@@ -1,0 +1,102 @@
+
+// ==========================================================================================
+// schema.prisma - Database Schema (JobTaracker) ( learn more about it in the docs: https://pris.ly/d/prisma-schema)
+// ==========================================================================================
+//
+// Defines the data models, relationships, and database connection for the
+// JobTracker application using Prisma ORM.
+//
+// Database: PostgreSQL 16 (local via Docker, see docker-compose.yml)
+//
+// Models:
+//   User            — an account that owns job applications
+//   Application     — a single job application belonging to a user
+//   StatusHistory   — an audit log of every status change on an application
+//
+// Usage:
+//   Apply schema to DB:   npx prisma migrate dev --name init
+//   Open data browser:    npx prisma studio
+//   Regenerate client:    npx prisma generate
+//
+// Environment:
+//   Requires DATABASE_URL in .env, e.g.:
+//   DATABASE_URL=postgresql://postgres:password@localhost:5432/jobtracker
+//
+// ==========================================================================================  
+
+
+
+// Generates the Prisma Client used to query the database throughout the app
+generator client {
+  provider = "prisma-client-js" 
+}
+
+// Connects to PostgreSQL using the DATABASE_URL variable from .env
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+// ------------------------------------------------------------------------------------------
+// User
+// Represents a registered account in the JobTracker application.
+// One user can own many Applications.
+// ------------------------------------------------------------------------------------------
+model User {
+  id           String        @id @default(uuid()) // primary key
+  email        String        @unique              // used for login, must be unique across all users
+  name         String
+  passwordHash String                             // bcrypt hash — never store plaintext passwords
+  createdAt    DateTime      @default(now())      // automatically set on record creation
+
+  // Relations
+  applications Application[]                      // all job applications belonging to this user
+}
+
+// -----------------------------------------------------------------------------
+// Application
+// Represents a single job application submitted by a user.
+// Tracks company, role, current status, and optional metadata.
+// One application can have many StatusHistory entries.
+// -----------------------------------------------------------------------------
+model Application {
+  id             String          @id @default(uuid())   // primary key
+  userId         String                                 // foreign key 
+
+  companyName    String
+  roleTitle      String                                 // job title of the position
+  status         String          @default("APPLIED")    // current status — see StatusHistory for valid values
+  dateApplied    DateTime        @default(now()) 
+  createdAt      DateTime        @default(now())        // when this record was created in the system
+  updatedAt      DateTime        @updatedAt             // automatically updated by Prisma on every save
+
+   // Optional fields
+  jobDescription String? // full job posting text
+  jobUrl         String? // link to the original job posting
+  location       String? // city, remote, hybrid, etc.
+  salaryRange    String? // e.g. "$80,000 - $100,000"
+
+  // Relations
+  user           User            @relation(fields: [userId], references: [id]) //virtual hander user that lets prisma do the join
+  statusHistory  StatusHistory[]     // full history of status changes for this application
+}
+
+// -----------------------------------------------------------------------------
+// StatusHistory
+// Immutable audit log — every time an application's status changes,
+// a new record is written here. Records are never updated or deleted.
+// This lets you reconstruct the full timeline of any application.
+//
+// Example status values: APPLIED, PHONE_SCREEN, INTERVIEW, OFFER, REJECTED
+// -----------------------------------------------------------------------------
+model StatusHistory {
+  id            String      @id @default(uuid())  // primary key
+  applicationId String                            // foreign key
+  toStatus      String                            // the new status being transitioned to
+  changedAt     DateTime    @default(now())       // when the status change occurred
+  fromStatus    String?                           // the previous status (null if this is the first entry)
+
+   // Relations
+  application   Application @relation(fields: [applicationId], references: [id])
+}
