@@ -268,7 +268,7 @@ export default async function LandingPage() {
           fontFamily: "system-ui, sans-serif",
           letterSpacing: "0.05em",
         }}>
-          © 2026 JOBSHEETS
+          © 2026 JOBSHEETS BY JUAN DIEGO SERRATO
         </p>
       </footer>
 

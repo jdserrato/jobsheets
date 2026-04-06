@@ -129,7 +129,7 @@ export default function LoginPage() {              // define the LoginPage compo
           color: "#999",
           letterSpacing: "0.05em",
         }}>
-          © 2026 JOBSHEETS
+          © 2026 JOBSHEETS BY JUAN DIEGO SERRATO
         </p>
       </div>
 
