@@ -76,49 +76,131 @@ export default async function ApplicationsPage() {
   })
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">My Applications</h1>
-        <Link
-          href="/applications/new"
-          className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
-        >
+    <div style={{
+      maxWidth: "800px",
+      margin: "0 auto",
+      padding: "48px 32px",
+      fontFamily: "system-ui, sans-serif"
+    }}>
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: "40px"
+      }}>
+        <div>
+          <p style={{
+            fontSize: "11px",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "#C9A84C",
+            marginBottom: "6px"
+          }}>
+            Your applications
+          </p>
+          <h1 style={{
+            fontSize: "28px",
+            fontWeight: "700",
+            color: "#1a1a1a",
+            letterSpacing: "-0.02em",
+            fontFamily: "Georgia, serif"
+          }}>
+            My Applications
+          </h1>
+        </div>
+        <Link href="/applications/new" style={{
+          fontSize: "13px",
+          backgroundColor: "#C9A84C",
+          color: "#fff",
+          padding: "10px 20px",
+          borderRadius: "6px",
+          textDecoration: "none",
+          fontWeight: "500",
+        }}>
           + Add Application
         </Link>
       </div>
 
       {applications.length === 0 ? (
-        <div className="text-center py-16 text-gray-500">
-          <p className="text-lg">No applications yet.</p>
-          <p className="text-sm mt-1">Click Add Application to get started.</p>
+        <div style={{
+          textAlign: "center",
+          padding: "80px 0",
+          color: "#bbb"
+        }}>
+          <p style={{ fontSize: "16px", marginBottom: "8px", color: "#999" }}>No applications yet.</p>
+          <p style={{ fontSize: "13px" }}>Click Add Application to get started.</p>
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {applications.map(app => (
-            <div
-              key={app.id}
-              className="bg-white border rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-start justify-between">
+            <div key={app.id} style={{
+              backgroundColor: "#fff",
+              border: "1px solid rgba(0,0,0,0.07)",
+              borderRadius: "10px",
+              padding: "20px 24px",
+            }}>
+              <div style={{
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "space-between"
+              }}>
                 <div>
-                  <h2 className="text-black text-lg font-semibold">{app.companyName}</h2>
-                  <p className="text-gray-600 text-sm">{app.roleTitle}</p>
+                  <h2 style={{
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    color: "#1a1a1a",
+                    marginBottom: "4px",
+                    fontFamily: "Georgia, serif"
+                  }}>
+                    {app.companyName}
+                  </h2>
+                  <p style={{ fontSize: "13px", color: "#666" }}>{app.roleTitle}</p>
                   {app.location && (
-                    <p className="text-gray-400 text-sm mt-1">{app.location}</p>
+                    <p style={{ fontSize: "12px", color: "#bbb", marginTop: "2px" }}>{app.location}</p>
                   )}
                 </div>
-                <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${STATUS_COLORS[app.status] || "bg-gray-100 text-gray-800"}`}>
+                <span style={{
+                  fontSize: "10px",
+                  fontWeight: "500",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  padding: "4px 10px",
+                  borderRadius: "4px",
+                  backgroundColor:
+                    app.status === "APPLIED" ? "#EFF6FF" :
+                    app.status === "PHONE_SCREEN" ? "#FEFCE8" :
+                    app.status === "INTERVIEW" ? "#F5F3FF" :
+                    app.status === "OFFER" ? "#F0FDF4" :
+                    app.status === "ACCEPTED" ? "#DCFCE7" :
+                    app.status === "REJECTED" ? "#FEF2F2" : "#F9FAFB",
+                  color:
+                    app.status === "APPLIED" ? "#1D4ED8" :
+                    app.status === "PHONE_SCREEN" ? "#854D0E" :
+                    app.status === "INTERVIEW" ? "#6D28D9" :
+                    app.status === "OFFER" ? "#15803D" :
+                    app.status === "ACCEPTED" ? "#166534" :
+                    app.status === "REJECTED" ? "#B91C1C" : "#374151",
+                }}>
                   {app.status.replace("_", " ")}
                 </span>
               </div>
-              <div className="flex items-center justify-between mt-4">
-                <p className="text-xs text-gray-400">
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginTop: "16px",
+                paddingTop: "16px",
+                borderTop: "1px solid rgba(0,0,0,0.05)"
+              }}>
+                <p style={{ fontSize: "11px", color: "#bbb" }}>
                   Applied {new Date(app.dateApplied).toLocaleDateString()}
                 </p>
-                <Link
-                  href={`/applications/${app.id}`}
-                  className="text-sm text-blue-600 hover:underline"
-                >
+                <Link href={`/applications/${app.id}`} style={{
+                  fontSize: "12px",
+                  color: "#C9A84C",
+                  textDecoration: "none",
+                  fontWeight: "500",
+                }}>
                   View details →
                 </Link>
               </div>

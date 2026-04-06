@@ -20,6 +20,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 /**
  * Registration page component. Collects new user details and delegates
@@ -46,6 +47,7 @@ export default function RegisterPage() {
   // Holds the error message returned by the API on failed registration attempts.
   // Empty string means no error is currently displayed.
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
     /**
    * Submits the registration form to the API and handles the response.
@@ -62,6 +64,8 @@ export default function RegisterPage() {
    * @returns {Promise<void>}
    */
   async function handleRegister() {
+    setLoading(true)
+    setError("")
     const res = await fetch("/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" }, // tells the API to expect JSON
@@ -73,52 +77,195 @@ export default function RegisterPage() {
       router.push("/login")
     } else {
       setError("Something went wrong. Please try again.") //fix when shift to email confirmation for security
+      setLoading(false)    
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-700">
-      <div className="bg-black p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6">Create an account</h1>
+    <div style={{
+      minHeight: "100vh",
+      backgroundColor: "#F5F0E8",
+      display: "flex",
+      fontFamily: "system-ui, sans-serif",
+    }}>
 
-        {error && (
-          <p className="text-red-500 text-sm mb-4">{error}</p>
-        )}
-
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          className="w-full border rounded-md p-2 mb-4 text-sm"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          className="w-full border rounded-md p-2 mb-4 text-sm"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          className="w-full border rounded-md p-2 mb-4 text-sm"
-        />
-        <button
-          onClick={handleRegister}
-          className="w-full bg-blue-600 text-white rounded-md p-2 font-medium hover:bg-blue-700"
-        >
-          Register
-        </button>
-
-        <p className="text-sm text-center mt-4 text-gray-600">
-          Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
-            Sign in
-          </a>
+      {/* Left panel */}
+      <div style={{
+        flex: "1",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "48px",
+        borderRight: "1px solid rgba(0,0,0,0.08)",
+      }}>
+        <Link href="/" style={{
+          fontSize: "18px",
+          fontWeight: "700",
+          color: "#1a1a1a",
+          textDecoration: "none",
+          fontFamily: "Georgia, serif",
+          letterSpacing: "-0.02em",
+        }}>
+          Jobsheets
+        </Link>
+        <div>
+          <div style={{
+            width: "40px",
+            height: "3px",
+            backgroundColor: "#C9A84C",
+            marginBottom: "20px",
+            borderRadius: "2px",
+          }} />
+          <p style={{
+            fontSize: "28px",
+            fontWeight: "700",
+            color: "#1a1a1a",
+            lineHeight: "1.3",
+            letterSpacing: "-0.02em",
+            fontFamily: "Georgia, serif",
+            maxWidth: "280px",
+          }}>
+            Stop losing track<br />of where you applied.
+          </p>
+        </div>
+        <p style={{
+          fontSize: "12px",
+          color: "#999",
+          letterSpacing: "0.05em",
+        }}>
+          © 2026 JOBSHEETS
         </p>
+      </div>
+
+      {/* Right panel */}
+      <div style={{
+        flex: "1",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "48px",
+      }}>
+        <div style={{ width: "100%", maxWidth: "360px" }}>
+          <h1 style={{
+            fontSize: "24px",
+            fontWeight: "700",
+            color: "#1a1a1a",
+            marginBottom: "8px",
+            letterSpacing: "-0.02em",
+            fontFamily: "Georgia, serif",
+          }}>
+            Create an account
+          </h1>
+          <p style={{
+            fontSize: "14px",
+            color: "#888",
+            marginBottom: "32px",
+          }}>
+            Free forever. No credit card required.
+          </p>
+
+          {error && (
+            <div style={{
+              backgroundColor: "#fff0f0",
+              border: "1px solid #fcc",
+              borderRadius: "6px",
+              padding: "10px 14px",
+              fontSize: "13px",
+              color: "#c00",
+              marginBottom: "16px",
+            }}>
+              {error}
+            </div>
+          )}
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <input
+              type="text"
+              placeholder="Full name"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "10px 14px",
+                border: "1px solid rgba(0,0,0,0.15)",
+                borderRadius: "6px",
+                fontSize: "14px",
+                backgroundColor: "#fff",
+                color: "#1a1a1a",
+                outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "10px 14px",
+                border: "1px solid rgba(0,0,0,0.15)",
+                borderRadius: "6px",
+                fontSize: "14px",
+                backgroundColor: "#fff",
+                color: "#1a1a1a",
+                outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "10px 14px",
+                border: "1px solid rgba(0,0,0,0.15)",
+                borderRadius: "6px",
+                fontSize: "14px",
+                backgroundColor: "#fff",
+                color: "#1a1a1a",
+                outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
+            <button
+              onClick={handleRegister}
+              disabled={loading}
+              style={{
+                width: "100%",
+                padding: "11px",
+                backgroundColor: loading ? "#d4b06a" : "#C9A84C",
+                color: "#fff",
+                border: "none",
+                borderRadius: "6px",
+                fontSize: "14px",
+                fontWeight: "500",
+                cursor: loading ? "not-allowed" : "pointer",
+                marginTop: "4px",
+              }}
+            >
+              {loading ? "Creating account..." : "Create account"}
+            </button>
+          </div>
+
+          <p style={{
+            fontSize: "13px",
+            color: "#888",
+            textAlign: "center",
+            marginTop: "24px",
+          }}>
+            Already have an account?{" "}
+            <Link href="/login" style={{
+              color: "#C9A84C",
+              textDecoration: "none",
+              fontWeight: "500",
+            }}>
+              Sign in
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   )

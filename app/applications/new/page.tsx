@@ -120,96 +120,112 @@ export default function NewApplicationPage() {
     }
   }
 
-  return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      <div className="flex items-center gap-4 mb-6">
-        <Link
-          href="/applications"
-          className="text-gray-500 hover:text-gray-700 text-sm"
-        >
+return (
+    <div style={{
+      maxWidth: "600px",
+      margin: "0 auto",
+      padding: "48px 32px",
+      fontFamily: "system-ui, sans-serif"
+    }}>
+      <div style={{ marginBottom: "40px" }}>
+        <Link href="/applications" style={{
+          fontSize: "12px",
+          color: "#999",
+          textDecoration: "none",
+          letterSpacing: "0.05em",
+        }}>
           ← Back
         </Link>
-        <h1 className="text-2xl font-bold">Add Application</h1>
+        <p style={{
+          fontSize: "11px",
+          letterSpacing: "0.15em",
+          textTransform: "uppercase",
+          color: "#C9A84C",
+          marginBottom: "6px",
+          marginTop: "16px"
+        }}>
+          New application
+        </p>
+        <h1 style={{
+          fontSize: "28px",
+          fontWeight: "700",
+          color: "#1a1a1a",
+          letterSpacing: "-0.02em",
+          fontFamily: "Georgia, serif"
+        }}>
+          Add Application
+        </h1>
       </div>
 
-      <div className="bg-white border rounded-lg p-6 shadow-sm">
+      <div style={{
+        backgroundColor: "#fff",
+        border: "1px solid rgba(0,0,0,0.07)",
+        borderRadius: "10px",
+        padding: "32px"
+      }}>
         {error && (
-          <p className="text-red-500 text-sm mb-4">{error}</p>
+          <div style={{
+            backgroundColor: "#fff0f0",
+            border: "1px solid #fcc",
+            borderRadius: "6px",
+            padding: "10px 14px",
+            fontSize: "13px",
+            color: "#c00",
+            marginBottom: "20px",
+          }}>
+            {error}
+          </div>
         )}
 
-        <div className="flex flex-col gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Company Name *
-            </label>
-            <input
-              type="text"
-              name="companyName"
-              value={form.companyName}
-              onChange={handleChange}
-              className="text-black w-full border rounded-md p-2 text-sm"
-              placeholder="e.g. Google"
-            />
-          </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          {[
+            { label: "Company Name", name: "companyName", required: true, placeholder: "e.g. Google" },
+            { label: "Role Title", name: "roleTitle", required: true, placeholder: "e.g. Software Developer" },
+            { label: "Location", name: "location", required: false, placeholder: "e.g. Calgary, AB" },
+            { label: "Salary Range", name: "salaryRange", required: false, placeholder: "e.g. $80,000 - $100,000" },
+            { label: "Job URL", name: "jobUrl", required: false, placeholder: "e.g. https://jobs.google.com/..." },
+          ].map(field => (
+            <div key={field.name}>
+              <label style={{
+                display: "block",
+                fontSize: "11px",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#999",
+                marginBottom: "8px"
+              }}>
+                {field.label} {field.required && <span style={{ color: "#C9A84C" }}>*</span>}
+              </label>
+              <input
+                type="text"
+                name={field.name}
+                value={form[field.name as keyof typeof form]}
+                onChange={handleChange}
+                placeholder={field.placeholder}
+                style={{
+                  width: "100%",
+                  padding: "10px 14px",
+                  border: "1px solid rgba(0,0,0,0.12)",
+                  borderRadius: "6px",
+                  fontSize: "14px",
+                  color: "#1a1a1a",
+                  backgroundColor: "#fafafa",
+                  outline: "none",
+                  boxSizing: "border-box",
+                }}
+              />
+            </div>
+          ))}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Role Title *
-            </label>
-            <input
-              type="text"
-              name="roleTitle"
-              value={form.roleTitle}
-              onChange={handleChange}
-              className="text-black w-full border rounded-md p-2 text-sm"
-              placeholder="e.g. Software Developer"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Location
-            </label>
-            <input
-              type="text"
-              name="location"
-              value={form.location}
-              onChange={handleChange}
-              className="text-black w-full border rounded-md p-2 text-sm"
-              placeholder="e.g. Calgary, AB"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Salary Range
-            </label>
-            <input
-              type="text"
-              name="salaryRange"
-              value={form.salaryRange}
-              onChange={handleChange}
-              className="text-black w-full border rounded-md p-2 text-sm"
-              placeholder="e.g. $80,000 - $100,000"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Job URL
-            </label>
-            <input
-              type="text"
-              name="jobUrl"
-              value={form.jobUrl}
-              onChange={handleChange}
-              className="text-black w-full border rounded-md p-2 text-sm"
-              placeholder="e.g. https://jobs.google.com/..."
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label style={{
+              display: "block",
+              fontSize: "11px",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#999",
+              marginBottom: "8px"
+            }}>
               Job Description
             </label>
             <textarea
@@ -217,15 +233,38 @@ export default function NewApplicationPage() {
               value={form.jobDescription}
               onChange={handleChange}
               rows={6}
-              className="text-black w-full border rounded-md p-2 text-sm"
               placeholder="Paste the job description here..."
+              style={{
+                width: "100%",
+                padding: "10px 14px",
+                border: "1px solid rgba(0,0,0,0.12)",
+                borderRadius: "6px",
+                fontSize: "14px",
+                color: "#1a1a1a",
+                backgroundColor: "#fafafa",
+                outline: "none",
+                boxSizing: "border-box",
+                resize: "vertical",
+                fontFamily: "system-ui, sans-serif",
+              }}
             />
           </div>
 
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="w-full bg-blue-600 text-white rounded-md p-2 font-medium hover:bg-blue-700 disabled:opacity-50"
+            style={{
+              width: "100%",
+              padding: "12px",
+              backgroundColor: loading ? "#d4b06a" : "#C9A84C",
+              color: "#fff",
+              border: "none",
+              borderRadius: "6px",
+              fontSize: "14px",
+              fontWeight: "500",
+              cursor: loading ? "not-allowed" : "pointer",
+              marginTop: "8px",
+            }}
           >
             {loading ? "Saving..." : "Save Application"}
           </button>

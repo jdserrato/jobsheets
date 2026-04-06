@@ -231,104 +231,258 @@ export default function ApplicationDetailPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      <div className="flex items-center gap-4 mb-6">
-        <Link
-          href="/applications"
-          className="text-gray-500 hover:text-gray-700 text-sm"
-        >
+    <div style={{
+      maxWidth: "600px",
+      margin: "0 auto",
+      padding: "48px 32px",
+      fontFamily: "system-ui, sans-serif"
+    }}>
+      <div style={{ marginBottom: "40px" }}>
+        <Link href="/applications" style={{
+          fontSize: "12px",
+          color: "#999",
+          textDecoration: "none",
+          letterSpacing: "0.05em",
+        }}>
           ← Back
         </Link>
-        <h1 className="text-2xl font-bold">{application.companyName}</h1>
+        <p style={{
+          fontSize: "11px",
+          letterSpacing: "0.15em",
+          textTransform: "uppercase",
+          color: "#C9A84C",
+          marginBottom: "6px",
+          marginTop: "16px"
+        }}>
+          Application detail
+        </p>
+        <h1 style={{
+          fontSize: "28px",
+          fontWeight: "700",
+          color: "#1a1a1a",
+          letterSpacing: "-0.02em",
+          fontFamily: "Georgia, serif"
+        }}>
+          {application.companyName}
+        </h1>
       </div>
 
-      <div className="bg-white border rounded-lg p-6 shadow-sm mb-6">
-        <div className="flex items-start justify-between mb-4">
+      {/* Main info card */}
+      <div style={{
+        backgroundColor: "#fff",
+        border: "1px solid rgba(0,0,0,0.07)",
+        borderRadius: "10px",
+        padding: "28px",
+        marginBottom: "16px"
+      }}>
+        <div style={{
+          display: "flex",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          marginBottom: "24px"
+        }}>
           <div>
-            <p className=" text-black text-lg font-medium">{application.roleTitle}</p>
+            <p style={{
+              fontSize: "16px",
+              fontWeight: "600",
+              color: "#1a1a1a",
+              marginBottom: "4px",
+              fontFamily: "Georgia, serif"
+            }}>
+              {application.roleTitle}
+            </p>
             {application.location && (
-              <p className="text-gray-500 text-sm">{application.location}</p>
+              <p style={{ fontSize: "13px", color: "#888" }}>{application.location}</p>
             )}
             {application.salaryRange && (
-              <p className="text-gray-500 text-sm">{application.salaryRange}</p>
+              <p style={{ fontSize: "13px", color: "#888" }}>{application.salaryRange}</p>
             )}
             {application.jobUrl && (
-              <a
-                href={application.jobUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline text-sm"
-              >
+              <a href={application.jobUrl} target="_blank" rel="noopener noreferrer" style={{
+                fontSize: "13px",
+                color: "#C9A84C",
+                textDecoration: "none",
+              }}>
                 View job posting →
               </a>
             )}
           </div>
-          <span className={`text-sm font-medium px-2.5 py-1 rounded-full ${STATUS_COLORS[application.status]}`}>
+          <span style={{
+            fontSize: "10px",
+            fontWeight: "500",
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            padding: "4px 10px",
+            borderRadius: "4px",
+            backgroundColor:
+              application.status === "APPLIED" ? "#EFF6FF" :
+              application.status === "PHONE_SCREEN" ? "#FEFCE8" :
+              application.status === "INTERVIEW" ? "#F5F3FF" :
+              application.status === "OFFER" ? "#F0FDF4" :
+              application.status === "ACCEPTED" ? "#DCFCE7" :
+              application.status === "REJECTED" ? "#FEF2F2" : "#F9FAFB",
+            color:
+              application.status === "APPLIED" ? "#1D4ED8" :
+              application.status === "PHONE_SCREEN" ? "#854D0E" :
+              application.status === "INTERVIEW" ? "#6D28D9" :
+              application.status === "OFFER" ? "#15803D" :
+              application.status === "ACCEPTED" ? "#166534" :
+              application.status === "REJECTED" ? "#B91C1C" : "#374151",
+          }}>
             {application.status.replace("_", " ")}
           </span>
         </div>
 
-        <div className="border-t pt-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: "20px" }}>
+          <p style={{
+            fontSize: "11px",
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "#999",
+            marginBottom: "10px"
+          }}>
             Update Status
-          </label>
-        <div className="flex gap-2">
-        <select
-            value={statusLoading ? application.status : undefined}
-            defaultValue={application.status}
-            id="status-select"
-            disabled={statusLoading}
-            className="text-black flex-1 border rounded-md p-2 text-sm disabled:opacity-50"
-        >
-            {STATUSES.map(s => (
-            <option key={s} value={s}>
-                {s.replace("_", " ")}
-            </option>
-            ))}
-        </select>
-        <button
-            onClick={() => {
-            const select = document.getElementById("status-select") as HTMLSelectElement
-            handleStatusChange(select.value)
-            }}
-            disabled={statusLoading}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
-        >
-            {statusLoading ? "Saving..." : "Save"}
-        </button>
-        </div>
+          </p>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <select
+              defaultValue={application.status}
+              id="status-select"
+              disabled={statusLoading}
+              style={{
+                flex: 1,
+                padding: "10px 14px",
+                border: "1px solid rgba(0,0,0,0.12)",
+                borderRadius: "6px",
+                fontSize: "13px",
+                color: "#1a1a1a",
+                backgroundColor: "#fafafa",
+                outline: "none",
+              }}
+            >
+              {STATUSES.map(s => (
+                <option key={s} value={s}>{s.replace("_", " ")}</option>
+              ))}
+            </select>
+            <button
+              onClick={() => {
+                const select = document.getElementById("status-select") as HTMLSelectElement
+                handleStatusChange(select.value)
+              }}
+              disabled={statusLoading}
+              style={{
+                padding: "10px 20px",
+                backgroundColor: statusLoading ? "#d4b06a" : "#C9A84C",
+                color: "#fff",
+                border: "none",
+                borderRadius: "6px",
+                fontSize: "13px",
+                fontWeight: "500",
+                cursor: statusLoading ? "not-allowed" : "pointer",
+              }}
+            >
+              {statusLoading ? "Saving..." : "Save"}
+            </button>
+          </div>
         </div>
       </div>
 
+      {/* Job description */}
       {application.jobDescription && (
-        <div className="bg-white border rounded-lg p-6 shadow-sm mb-6">
-          <h2 className="text-sm font-medium text-gray-700 mb-2">Job Description</h2>
-          <p className="text-sm text-gray-600 whitespace-pre-wrap">
+        <div style={{
+          backgroundColor: "#fff",
+          border: "1px solid rgba(0,0,0,0.07)",
+          borderRadius: "10px",
+          padding: "28px",
+          marginBottom: "16px"
+        }}>
+          <p style={{
+            fontSize: "11px",
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "#999",
+            marginBottom: "14px"
+          }}>
+            Job Description
+          </p>
+          <p style={{
+            fontSize: "13px",
+            color: "#555",
+            lineHeight: "1.7",
+            whiteSpace: "pre-wrap"
+          }}>
             {application.jobDescription}
           </p>
         </div>
       )}
 
-      <div className="bg-white border rounded-lg p-6 shadow-sm mb-6">
-        <h2 className="text-sm font-medium text-gray-700 mb-4">Status History</h2>
+      {/* Status history */}
+      <div style={{
+        backgroundColor: "#fff",
+        border: "1px solid rgba(0,0,0,0.07)",
+        borderRadius: "10px",
+        padding: "28px",
+        marginBottom: "16px"
+      }}>
+        <p style={{
+          fontSize: "11px",
+          letterSpacing: "0.1em",
+          textTransform: "uppercase",
+          color: "#999",
+          marginBottom: "16px"
+        }}>
+          Status History
+        </p>
         {history.length === 0 ? (
-          <p className="text-sm text-gray-400">No history yet.</p>
+          <p style={{ fontSize: "13px", color: "#bbb" }}>No history yet.</p>
         ) : (
-          <div className="flex flex-col gap-3">
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             {history.map((entry: StatusHistoryEntry) => (
-              <div key={entry.id} className="flex items-center gap-2 text-sm">
-                <span className="text-gray-400 text-xs">
+              <div key={entry.id} style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                fontSize: "13px"
+              }}>
+                <span style={{ fontSize: "11px", color: "#bbb", width: "80px", flexShrink: 0 }}>
                   {new Date(entry.changedAt).toLocaleDateString()}
                 </span>
                 {entry.fromStatus && (
                   <>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[entry.fromStatus]}`}>
+                    <span style={{
+                      fontSize: "10px",
+                      fontWeight: "500",
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      padding: "3px 8px",
+                      borderRadius: "4px",
+                      backgroundColor: "#F9FAFB",
+                      color: "#666",
+                    }}>
                       {entry.fromStatus.replace("_", " ")}
                     </span>
-                    <span className="text-gray-400">→</span>
+                    <span style={{ color: "#C9A84C", fontSize: "12px" }}>→</span>
                   </>
                 )}
-                <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[entry.toStatus]}`}>
+                <span style={{
+                  fontSize: "10px",
+                  fontWeight: "500",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  padding: "3px 8px",
+                  borderRadius: "4px",
+                  backgroundColor:
+                    entry.toStatus === "APPLIED" ? "#EFF6FF" :
+                    entry.toStatus === "INTERVIEW" ? "#F5F3FF" :
+                    entry.toStatus === "OFFER" ? "#F0FDF4" :
+                    entry.toStatus === "ACCEPTED" ? "#DCFCE7" :
+                    entry.toStatus === "REJECTED" ? "#FEF2F2" : "#F9FAFB",
+                  color:
+                    entry.toStatus === "APPLIED" ? "#1D4ED8" :
+                    entry.toStatus === "INTERVIEW" ? "#6D28D9" :
+                    entry.toStatus === "OFFER" ? "#15803D" :
+                    entry.toStatus === "ACCEPTED" ? "#166534" :
+                    entry.toStatus === "REJECTED" ? "#B91C1C" : "#374151",
+                }}>
                   {entry.toStatus.replace("_", " ")}
                 </span>
               </div>
@@ -337,10 +491,21 @@ export default function ApplicationDetailPage() {
         )}
       </div>
 
+      {/* Delete */}
       <button
         onClick={handleDelete}
         disabled={deleteLoading}
-        className="w-full border border-red-300 text-red-600 rounded-md p-2 text-sm font-medium hover:bg-red-50 disabled:opacity-50"
+        style={{
+          width: "100%",
+          padding: "12px",
+          backgroundColor: "transparent",
+          color: "#e00",
+          border: "1px solid rgba(220,0,0,0.2)",
+          borderRadius: "6px",
+          fontSize: "13px",
+          fontWeight: "500",
+          cursor: deleteLoading ? "not-allowed" : "pointer",
+        }}
       >
         {deleteLoading ? "Deleting..." : "Delete Application"}
       </button>

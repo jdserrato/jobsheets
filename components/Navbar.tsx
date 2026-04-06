@@ -18,34 +18,64 @@ export default function Navbar() {
   function isActive(path: string) {
     return pathname === path || pathname.startsWith(path + "/")
   }
-
-  return (
-    <nav className="bg-black px-4 py-3">
-      <div className="max-w-4xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-6">
-          <span className="font-bold text-white">JobTrackr</span>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/dashboard"
-              className={`text-sm ${isActive("/dashboard") ? "text-white font-medium" : "text-gray-500 hover:text-gray-900"}`}
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/applications"
-              className={`text-white text-sm ${isActive("/applications") ? "font-medium" : "text-gray-500 hover:text-gray-900"}`}
-            >
-              Applications
-            </Link>
-          </div>
+  
+return (
+    <nav style={{
+      backgroundColor: "#fff",
+      borderBottom: "1px solid rgba(0,0,0,0.08)",
+      padding: "0 48px",
+      height: "56px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      fontFamily: "system-ui, sans-serif",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "32px" }}>
+        <Link href="/dashboard" style={{
+          fontSize: "16px",
+          fontWeight: "700",
+          color: "#1a1a1a",
+          textDecoration: "none",
+          fontFamily: "Georgia, serif",
+          letterSpacing: "-0.02em",
+        }}>
+          Jobsheets
+        </Link>
+        <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+          <Link href="/dashboard" style={{
+            fontSize: "13px",
+            color: isActive("/dashboard") ? "#C9A84C" : "#888",
+            textDecoration: "none",
+            fontWeight: isActive("/dashboard") ? "500" : "400",
+            letterSpacing: "0.02em",
+          }}>
+            Dashboard
+          </Link>
+          <Link href="/applications" style={{
+            fontSize: "13px",
+            color: isActive("/applications") ? "#C9A84C" : "#888",
+            textDecoration: "none",
+            fontWeight: isActive("/applications") ? "500" : "400",
+            letterSpacing: "0.02em",
+          }}>
+            Applications
+          </Link>
         </div>
-        <button
-          onClick={() => signOut({ callbackUrl: "/login" })}
-          className="text-sm text-white hover:text-gray-900"
-        >
-          Sign out
-        </button>
       </div>
+      <button
+        onClick={() => signOut({ callbackUrl: "/login" })}
+        style={{
+          fontSize: "13px",
+          color: "#888",
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          padding: "0",
+          fontFamily: "system-ui, sans-serif",
+        }}
+      >
+        Sign out
+      </button>
     </nav>
   )
 }
