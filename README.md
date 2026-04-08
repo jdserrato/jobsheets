@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jobsheets - Job Application Tracker
+A full-stack job application tracking web app built as a portfolio project.
+Live site → https://jobsheets.ca/
 
-## Getting Started
 
-First, run the development server:
+## What It Does
+JobSheets helps job seekers stay organized during their search by tracking every application in one place. Key features:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+* **Add & manage applications** — company, role, location, date applied, job posting URL, and job description
+* **Track status changes** — every time an application moves (e.g. Applied → Interview → Offer), the change is logged with a timestamp
+* **Status history timeline** — see the full progression of any application at a glance
+* **Stats dashboard** — at-a-glance metrics: total applications, response rate, applications submitted per week, number of applications in different stages of the hiring process
+* **Secure auth** — register and log in; your data is private to your account
+* **Mobile-friendly** — responsive layout that works on any screen size
+
+## Tech Stack
+
+
+| Layer  | Technology |
+| ------------- |:-------------:|
+| Framework      | Next.js 15    |
+| Language      | TypeScript     |
+| Styling     | Tailwind CSS    |
+| Database     | PostgreSQL (local: Docker-production: Supabase)    |
+| ORM| Prisma 5     |
+| Auth    | Next.Auth.js    |
+| Deployment     | Vercel     |
+
+## Database Schema
+Three models power the app
 ```
+User
+ └── Application (many per user)
+       └── StatusHistory (one entry per status change)
+```
+* **User** — stores credentials and links to all their applications
+* **Application** — one row per job applied to (company, role, salary range, joburl, job description, status)
+* **StatusHistory** — an append-only log; every status change on an application writes a new row here, preserving the full history
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Running Locally
+### 1. Clone the repository
+```
+git clone https://github.com/jdserrato/jobsheets.git
+cd jobsheets
+```
+### 2. Install dependencies
+```
+npm install
+```
+### 3. Start the PostgreSQL database
+The project includes a **docker-compose.yml** that spins up a local Postgres instance. Make sure Docker Desktop is running, then:
+```
+docker-compose up -d
+```
+This starts a Postgres container in the background on port 5432.
+### 4. Configure environment variables
+Create a .env file in the project root:
+```
+# Local database (Docker)
+POSTGRES_PASSWORD=postgres 
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/jobtracker?schema=public"
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# NextAuth — generate a secret with: openssl rand -base64 32
+NEXTAUTH_SECRET="your-random-secret-here"
+NEXTAUTH_URL="http://localhost:3000"
+```
+**⚠️ Never commit your .env file. It is already listed in .gitignore.**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 5. Run database migrations
+Prisma reads your schema and creates the tables in Postgres:
+```
+npx prisma migrate dev
+```
+### 6. Start the development server
+```
+npm run dev
+```
+Open http://localhost:3000 in your browser. Register an account and start tracking.
 
-## Learn More
+## Production Architecture
+The production deployment at https://jobsheets.ca/ uses:
+* Vercel — hosts the Next.js app, handles CI/CD on every push to main
+* Supabase — managed PostgreSQL database with connection pooling via PgBouncer
+* Environment variables — set in the Vercel dashboard (never stored in the repo)
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
+```
+jobsheets/
+├── app/
+│   ├── api/            # REST API routes (applications CRUD, auth)
+│   ├── applications/ 
+│   ├── dashboard/      # Stats dashboard
+│   ├── login/          # Login page
+│   └── register/       # Registration page
+├── components/         # Reusable UI components
+├── prisma/
+│   ├── schema.prisma   # Database models
+│   └── migrations/     # Migration history
+├── middleware.ts       # Route protection via NextAuth
+├── docker-compose.yml  # Local Postgres setup
+└── .env                # add your .env file
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+## Author
+**Juan Diego Serrato**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+B.Sc. Computer Science — Mount Royal University
+* GitHub: https://github.com/jdserrato
+* LinkedIn: https://www.linkedin.com/in/juan-diego-serrato-1870b2241/
+* Live project: https://jobsheets.ca/
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+**MIT** - feel free to fork and adapt for your own job search. 
