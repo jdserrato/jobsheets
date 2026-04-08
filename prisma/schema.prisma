@@ -12,6 +12,7 @@
 //   User            — an account that owns job applications
 //   Application     — a single job application belonging to a user
 //   StatusHistory   — an audit log of every status change on an application
+//   PasswordResetToken 
 //
 // Usage:
 //   Apply schema to DB:   npx prisma migrate dev --name init
@@ -53,6 +54,7 @@ model User {
 
   // Relations
   applications Application[]                      // all job applications belonging to this user
+  passwordResetTokens  PasswordResetToken[] 
 }
 
 // -----------------------------------------------------------------------------
@@ -100,4 +102,19 @@ model StatusHistory {
 
    // Relations
   application   Application @relation(fields: [applicationId], references: [id])
+}
+
+// -----------------------------------------------------------------------------
+// PasswordResetToken
+// Short-lived token emailed to a user when they request a password reset.
+// Consumed and deleted immediately after the password is successfully changed.
+// -----------------------------------------------------------------------------
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }

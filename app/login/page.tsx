@@ -222,6 +222,12 @@ return (
           </button>
         </div>
 
+        <p style={{ fontSize: "13px", color: "#888", textAlign: "center", marginTop: "5px" }}>
+          <Link href="/forgot-password" style={{ color: "#C9A84C", textDecoration: "none" }}>
+          Forgot password?
+          </Link>
+        </p>
+
         <p style={{
           fontSize: "13px",
           color: "#888",
