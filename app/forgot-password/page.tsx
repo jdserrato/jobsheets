@@ -59,7 +59,7 @@ export default function ForgotPasswordPage() {
             </h1>
             <p style={{ fontSize: "14px", color: "#888", lineHeight: "1.6" }}>
               If an account exists for <strong style={{ color: "#1a1a1a" }}>{email}</strong>, 
-              we've sent a password reset link. It expires in 1 hour.
+              we have sent a password reset link. It expires in 1 hour.
             </p>
             <p style={{ fontSize: "13px", color: "#aaa", marginTop: "24px" }}>
               <Link href="/login" style={{ color: "#C9A84C", textDecoration: "none" }}>
@@ -80,7 +80,7 @@ export default function ForgotPasswordPage() {
               Forgot your password?
             </h1>
             <p style={{ fontSize: "14px", color: "#888", marginBottom: "32px" }}>
-              Enter your email and we'll send you a reset link.
+              Enter your email and we will send you a reset link.
             </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
