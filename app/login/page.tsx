@@ -90,7 +90,7 @@ return (
     <div className="w-full max-w-sm mb-12">
       <div className="w-8 h-0.5 bg-[#C9A84C] mb-5 rounded-sm" />
       <p className="text-3xl font-bold text-gray-900 leading-snug tracking-tight font-serif">
-        Your job search,<br />finally organised.
+        Your job search,<br />finally organized.
       </p>
     </div>
 
