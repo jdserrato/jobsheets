@@ -77,184 +77,91 @@ export default function LoginPage() {              // define the LoginPage compo
     }
   }
 
+
 return (
-    <div style={{
-      minHeight: "100vh",
-      backgroundColor: "#F5F0E8",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "48px 24px",
-      fontFamily: "system-ui, sans-serif",
-    }}>
+  <div className = "min-h-screen bg-[#F5F0E8] flex flex-col font-sans px-5 py-12 items-center justify-center">
 
+    {/* Logo */}
+    <Link href="/" className="text-lg text-gray-900 font-bold font-serif tracking-tight mb-12 no-underline   ">
+      Jobsheets
+    </Link>
 
-      {/* Logo */}
-      <Link href="/" style={{
-        fontSize: "18px",
-        fontWeight: "700",
-        color: "#1a1a1a",
-        textDecoration: "none",
-        fontFamily: "Georgia, serif",
-        letterSpacing: "-0.02em",
-        marginBottom: "48px",
-      }}>
-        Jobsheets
-      </Link>
+    {/* Tagline */}
+    <div className="w-full max-w-sm mb-12">
+      <div className="w-8 h-0.5 bg-[#C9A84C] mb-5 rounded-sm" />
+      <p className="text-3xl font-bold text-gray-900 leading-snug tracking-tight font-serif">
+        Your job search,<br />finally organised.
+      </p>
+    </div>
 
-
-              {/* Tagline */}
-      <div style={{ width: "100%", maxWidth: "360px", marginBottom: "48px" }}>
-        <div style={{
-          width: "40px",
-          height: "3px",
-          backgroundColor: "#C9A84C",
-          marginBottom: "20px",
-          borderRadius: "2px",
-        }} />
-        <p style={{
-          fontSize: "28px",
-          fontWeight: "700",
-          color: "#1a1a1a",
-          lineHeight: "1.3",
-          letterSpacing: "-0.02em",
-          fontFamily: "Georgia, serif",
-          maxWidth: "280px",
-          margin: "0",
-        }}>
-          Your job search,<br />finally organised.
-        </p>
-      </div>
-
-
-      {/* Form card */}
-      <div style={{
-        width: "100%",
-        maxWidth: "360px",
-      }}>
-        <h1 style={{
-          fontSize: "24px",
-          fontWeight: "700",
-          color: "#1a1a1a",
-          marginBottom: "8px",
-          letterSpacing: "-0.02em",
-          fontFamily: "Georgia, serif",
-        }}>
-          Welcome back
-        </h1>
-        <p style={{
-          fontSize: "14px",
-          color: "#888",
-          marginBottom: "32px",
-        }}>
-          Sign in to your account
-        </p>
-
-        {error && (
-          <div style={{
-            backgroundColor: "#fff0f0",
-            border: "1px solid #fcc",
-            borderRadius: "6px",
-            padding: "10px 14px",
-            fontSize: "13px",
-            color: "#c00",
-            marginBottom: "16px",
-          }}>
-            {error}
-          </div>
-        )}
-
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            autoComplete="email"
-            style={{
-              width: "100%",
-              padding: "10px 14px",
-              border: "1px solid rgba(0,0,0,0.15)",
-              borderRadius: "6px",
-              fontSize: "14px",
-              backgroundColor: "#fff",
-              color: "#1a1a1a",
-              outline: "none",
-              boxSizing: "border-box",
-            }}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            autoComplete="current-password"
-            style={{
-              width: "100%",
-              padding: "10px 14px",
-              border: "1px solid rgba(0,0,0,0.15)",
-              borderRadius: "6px",
-              fontSize: "14px",
-              backgroundColor: "#fff",
-              color: "#1a1a1a",
-              outline: "none",
-              boxSizing: "border-box",
-            }}
-          />
-          <button
-            onClick={handleLogin}
-            disabled={loading}
-            style={{
-              width: "100%",
-              padding: "11px",
-              backgroundColor: loading ? "#d4b06a" : "#C9A84C",
-              color: "#fff",
-              border: "none",
-              borderRadius: "6px",
-              fontSize: "14px",
-              fontWeight: "500",
-              cursor: loading ? "not-allowed" : "pointer",
-              marginTop: "4px",
-            }}
-          >
-            {loading ? "Signing in..." : "Sign in"}
-          </button>
-        </div>
-
-        <p style={{ fontSize: "13px", color: "#888", textAlign: "center", marginTop: "5px" }}>
-          <Link href="/forgot-password" style={{ color: "#C9A84C", textDecoration: "none" }}>
-          Forgot password?
-          </Link>
-        </p>
-
-        <p style={{
-          fontSize: "13px",
-          color: "#888",
-          textAlign: "center",
-          marginTop: "24px",
-        }}>
-          No account?{" "}
-          <Link href="/register" style={{
-            color: "#C9A84C",
-            textDecoration: "none",
-            fontWeight: "500",
-          }}>
-            Create one
-          </Link>
-        </p>
-      </div>
-
-      {/* Footer */}
-      <p style={{
-        fontSize: "12px",
-        color: "#999",
-        letterSpacing: "0.05em",
-        marginTop: "48px",
-      }}>
-        © 2026 JOBSHEETS BY JUAN DIEGO SERRATO
+    {/* Form */}
+    <div className="w-full max-w-sm">
+      <h1 className="text-2xl font-bold text-gray-900 mb-2 tracking-tight font-serif">
+        Welcome back
+      </h1>
+      <p className="text-sm text-gray-400 mb-8">
+        Sign in to your account
       </p>
 
+      {error && (
+      <div className="bg-red-50 border border-red-200 rounded-md px-3.5 py-2.5 text-sm text-red-600 mb-4">
+        {error}
+      </div>
+      )}
+
+      <div className="flex flex-col gap-3">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          autoComplete="email"
+          className="w-full px-3.5 py-2.5 border border-black/15 rounded-md text-sm bg-white text-gray-900 outline-none focus:ring-2 focus:ring-[#C9A84C] focus:border-[#C9A84C] transition-all"
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          autoComplete="current-password"
+          className="w-full px-3.5 py-2.5 border border-black/15 rounded-md text-sm bg-white text-gray-900 outline-none focus:ring-2 focus:ring-[#C9A84C] focus:border-[#C9A84C] transition-all"
+          />
+
+        <button
+          onClick={handleLogin}
+          disabled={loading}
+          className={`w-full py-3 text-white text-sm font-medium rounded-md mt-1 ${
+            loading ? "bg-[#d4b06a] cursor-not-allowed" : "bg-[#C9A84C] cursor-pointer"
+          }`}
+        >
+          {loading ? "Signing in..." : "Sign in"}
+        </button>
+
+      </div>
+
+      <p className="text-sm text-gray-400 text-center mt-3">
+        <Link href="/forgot-password" className="text-[#C9A84C] no-underline">
+          Forgot password?
+        </Link>
+      </p>
+
+      <p className="text-sm text-gray-400 text-center mt-6">
+        No account?{" "}
+        <Link href="/register" className="text-[#C9A84C] no-underline font-medium">
+          Create one
+        </Link>
+      </p>
     </div>
+  
+
+    {/* footer */}
+    <footer className="border-t border-black/10 py-6 px-5 text-center">
+    <p className="text-xs text-gray-500 font-sans tracking-wide">
+      © {new Date().getFullYear()} JOBSHEETS BY JUAN DIEGO SERRATO
+    </p>
+    </footer>
+
+  </div>
   )
 }

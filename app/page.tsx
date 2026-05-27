@@ -21,7 +21,7 @@ export default async function LandingPage() {
 
       {/* Navbar */}
       <nav className="flex items-center justify-between px-5 py-6 border-b border-black/[0.08]">
-        <span className="text-lg font-bold tracking-tight text-black">
+        <span className="text-lg font-bold tracking-tight text-gray-900">
           Jobsheets
         </span>
         <div className="flex items-center gap-6">
@@ -39,7 +39,7 @@ export default async function LandingPage() {
         <p className="text-xs tracking-widest uppercase text-[#C9A84C] mb-6 font-sans">
           job search, organized
         </p>
-        <h1 className="text-5xl font-bold text-black mb-6 leading-tight tracking-tight">
+        <h1 className="text-5xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
           Stop tracking jobs<br/> in a spreadsheet.
         </h1>
         <p className="text-lg text-gray-500 leading-relaxed mb-10 font-sans">
