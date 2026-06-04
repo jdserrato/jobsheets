@@ -144,7 +144,7 @@ return (
         <Link href="/forgot-password" className="text-[#C9A84C] no-underline">
           Forgot password?
         </Link>
-      </p>
+      </p>  
 
       <p className="text-sm text-gray-400 text-center mt-6">
         No account?{" "}
@@ -153,14 +153,6 @@ return (
         </Link>
       </p>
     </div>
-  
-
-    {/* footer */}
-    <footer className="border-t border-black/10 py-6 px-5 text-center">
-    <p className="text-xs text-gray-500 font-sans tracking-wide">
-      © {new Date().getFullYear()} JOBSHEETS BY JUAN DIEGO SERRATO
-    </p>
-    </footer>
 
   </div>
   )

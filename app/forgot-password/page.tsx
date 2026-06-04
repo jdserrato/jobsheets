@@ -21,113 +21,71 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div style={{
-      minHeight: "100vh",
-      backgroundColor: "#F5F0E8",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "48px 24px",
-      fontFamily: "system-ui, sans-serif",
-    }}>
+    <div className = "min-h-screen bg-[#F5F0E8] flex flex-col font-sans px-5 py-12 items-center justify-center">
 
-      <Link href="/" style={{
-        fontSize: "18px",
-        fontWeight: "700",
-        color: "#1a1a1a",
-        textDecoration: "none",
-        fontFamily: "Georgia, serif",
-        letterSpacing: "-0.02em",
-        marginBottom: "48px",
-      }}>
+      {/* Logo */}
+      <Link href="/" className="text-lg text-gray-900 font-bold font-serif tracking-tight mb-12 no-underline   ">
         Jobsheets
       </Link>
 
-      <div style={{ width: "100%", maxWidth: "360px" }}>
+      {/* Form */}
+      <div className="w-full max-w-sm">
         {submitted ? (
           <>
-            <h1 style={{
-              fontSize: "24px",
-              fontWeight: "700",
-              color: "#1a1a1a",
-              marginBottom: "12px",
-              letterSpacing: "-0.02em",
-              fontFamily: "Georgia, serif",
-            }}>
+            <h1 className="text-3xl font-bold text-gray-900 leading-snug tracking-tight font-serif">
               Check your email
             </h1>
-            <p style={{ fontSize: "14px", color: "#888", lineHeight: "1.6" }}>
-              If an account exists for <strong style={{ color: "#1a1a1a" }}>{email}</strong>, 
-              we have sent a password reset link. It expires in 1 hour.
+            <p className="text-sm text-gray-400 mb-8">
+              If an account exists for <strong className="text-gray-900">{email}</strong>, we have sent a 
+              password reset link. It expires in 1 hour.
             </p>
-            <p style={{ fontSize: "13px", color: "#aaa", marginTop: "24px" }}>
-              <Link href="/login" style={{ color: "#C9A84C", textDecoration: "none" }}>
-                Back to sign in
+            <p className="text-sm text-gray-400 text-left mt-6">
+              <Link href="/login" className="text-[#C9A84C] no-underline font-medium">
+                Back to sign in 
               </Link>
             </p>
           </>
         ) : (
           <>
-            <h1 style={{
-              fontSize: "24px",
-              fontWeight: "700",
-              color: "#1a1a1a",
-              marginBottom: "8px",
-              letterSpacing: "-0.02em",
-              fontFamily: "Georgia, serif",
-            }}>
+            <div className="w-8 h-0.5 bg-[#C9A84C] mb-5 rounded-sm" />
+            <h1 className="text-2xl font-bold text-gray-900 mb-2 tracking-tight font-serif">
               Forgot your password?
             </h1>
-            <p style={{ fontSize: "14px", color: "#888", marginBottom: "32px" }}>
+            <p className="text-sm text-gray-400 mb-8">
               Enter your email and we will send you a reset link.
             </p>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div className="flex flex-col gap-3">
               <input
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: "10px 14px",
-                  border: "1px solid rgba(0,0,0,0.15)",
-                  borderRadius: "6px",
-                  fontSize: "14px",
-                  backgroundColor: "#fff",
-                  color: "#1a1a1a",
-                  outline: "none",
-                  boxSizing: "border-box",
-                }}
+                autoComplete="email"
+                className="w-full px-3.5 py-2.5 border border-black/15 rounded-md text-sm bg-white text-gray-900 outline-none focus:ring-2 focus:ring-[#C9A84C] focus:border-[#C9A84C] transition-all"
               />
+
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                style={{
-                  width: "100%",
-                  padding: "11px",
-                  backgroundColor: loading ? "#d4b06a" : "#C9A84C",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "6px",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  cursor: loading ? "not-allowed" : "pointer",
-                }}
+                className={`w-full py-3 text-white text-sm font-medium rounded-md mt-1 ${
+                  loading ? "bg-[#d4b06a] cursor-not-allowed" : "bg-[#C9A84C] cursor-pointer"
+                }`}
               >
                 {loading ? "Sending..." : "Send reset link"}
               </button>
             </div>
 
-            <p style={{ fontSize: "13px", color: "#888", textAlign: "center", marginTop: "24px" }}>
-              <Link href="/login" style={{ color: "#C9A84C", textDecoration: "none" }}>
-                Back to sign in
+            <p className="text-sm text-gray-400 text-center mt-6">
+              <Link href="/login" className="text-[#C9A84C] no-underline font-medium">
+                Back to sign in 
               </Link>
             </p>
+          
           </>
-        )}
-      </div>
+      )}
+      </div>              
     </div>
+
   )
 }

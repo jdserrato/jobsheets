@@ -161,14 +161,6 @@ export default function RegisterPage() {
         </p>
   
     </div>
-
-    {/* footer */}
-    <footer className="border-t border-black/10 py-6 px-5 text-center">
-    <p className="text-xs text-gray-500 font-sans tracking-wide">
-      © {new Date().getFullYear()} JOBSHEETS BY JUAN DIEGO SERRATO
-    </p>
-    </footer>
-
   </div>
   )
 }
